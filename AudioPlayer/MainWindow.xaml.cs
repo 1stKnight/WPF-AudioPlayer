@@ -69,7 +69,7 @@ namespace AudioPlayer
                 filePath = openFileDialog.FileName;
                 CurrentPlaying = new Song(openFileDialog.FileName, "");
                 mePlayer.Play();
-                mePlayer.Stop();
+                mediaPlayerIsPlaying = true;
             }
         }
 
@@ -77,7 +77,8 @@ namespace AudioPlayer
         {
             if (!Playlist.Exists(elem => elem.Name == CurrentPlaying.Name))
             {
-                Playlist.Add(new Song(filePath, mePlayer.NaturalDuration.TimeSpan.ToString(@"hh\:mm\:ss")));
+                CurrentPlaying = new Song(filePath, mePlayer.NaturalDuration.TimeSpan.ToString(@"hh\:mm\:ss"));
+                Playlist.Add(CurrentPlaying);
                 PlaylistGrid.ItemsSource = null;
                 PlaylistGrid.ItemsSource = Playlist;
             }
@@ -116,24 +117,44 @@ namespace AudioPlayer
             mediaPlayerIsPlaying = false;
         }
 
-        private void Next_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        private void NextTrack_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = mediaPlayerIsPlaying;
+            e.CanExecute = (mePlayer != null) && (mePlayer.Source != null);
         }
 
-        private void Next_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void NextTrack_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            mePlayer.Pause();
+            int index = Playlist.IndexOf(CurrentPlaying);
+            if (index == Playlist.Count - 1) return;
+            if (index >= 0)
+            {
+                mePlayer.Pause();
+                CurrentPlaying = Playlist[index + 1];
+                mePlayer.Source = new Uri(CurrentPlaying.Name);
+                mePlayer.Play();
+                mediaPlayerIsPlaying = true;
+
+            }
         }
 
-        private void Previous_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        private void PreviousTrack_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = mediaPlayerIsPlaying;
+            e.CanExecute = (mePlayer != null) && (mePlayer.Source != null);
         }
 
-        private void Previous_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void PreviousTrack_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            mePlayer.Pause();
+            int index = Playlist.IndexOf(CurrentPlaying);
+            if (index <= 0) return;
+            if (index > 0)
+            {
+                mePlayer.Pause();
+                CurrentPlaying = Playlist[index - 1];
+                mePlayer.Source = new Uri(CurrentPlaying.Name);
+                mePlayer.Play();
+                mediaPlayerIsPlaying = true;
+
+            }
         }
 
         private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)

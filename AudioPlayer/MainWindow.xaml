@@ -12,8 +12,8 @@
         <CommandBinding Command="MediaCommands.Play" CanExecute="Play_CanExecute" Executed="Play_Executed" />
         <CommandBinding Command="MediaCommands.Pause" CanExecute="Pause_CanExecute" Executed="Pause_Executed" />
         <CommandBinding Command="MediaCommands.Stop" CanExecute="Stop_CanExecute" Executed="Stop_Executed" />
-        <CommandBinding Command="MediaCommands.NextTrack" CanExecute="Next_CanExecute" Executed="Next_Executed" />
-        <CommandBinding Command="MediaCommands.PreviousTrack" CanExecute="Previous_CanExecute" Executed="Previous_Executed" />
+        <CommandBinding Command="MediaCommands.NextTrack" CanExecute="NextTrack_CanExecute" Executed="NextTrack_Executed" />
+        <CommandBinding Command="MediaCommands.PreviousTrack" CanExecute="PreviousTrack_CanExecute" Executed="PreviousTrack_Executed" />
     </Window.CommandBindings>
     <Grid MouseWheel="Grid_MouseWheel">
         <Grid.RowDefinitions>
