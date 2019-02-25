@@ -12,6 +12,8 @@
         <CommandBinding Command="MediaCommands.Play" CanExecute="Play_CanExecute" Executed="Play_Executed" />
         <CommandBinding Command="MediaCommands.Pause" CanExecute="Pause_CanExecute" Executed="Pause_Executed" />
         <CommandBinding Command="MediaCommands.Stop" CanExecute="Stop_CanExecute" Executed="Stop_Executed" />
+        <CommandBinding Command="MediaCommands.NextTrack" CanExecute="Next_CanExecute" Executed="Next_Executed" />
+        <CommandBinding Command="MediaCommands.PreviousTrack" CanExecute="Previous_CanExecute" Executed="Previous_Executed" />
     </Window.CommandBindings>
     <Grid MouseWheel="Grid_MouseWheel">
         <Grid.RowDefinitions>
@@ -34,6 +36,13 @@
             </Button>
             <Button Command="MediaCommands.Stop">
                 <Image Source="/AudioPlayer;component/Images/stop.png" />
+            </Button>
+            <Separator />
+            <Button Command="MediaCommands.PreviousTrack">
+                <Image Source="/AudioPlayer;component/Images/previous.png" />
+            </Button>
+            <Button Command="MediaCommands.NextTrack">
+                <Image Source="/AudioPlayer;component/Images/next.png" />
             </Button>
         </ToolBar>
 

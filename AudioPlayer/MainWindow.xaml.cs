@@ -116,6 +116,26 @@ namespace AudioPlayer
             mediaPlayerIsPlaying = false;
         }
 
+        private void Next_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = mediaPlayerIsPlaying;
+        }
+
+        private void Next_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            mePlayer.Pause();
+        }
+
+        private void Previous_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = mediaPlayerIsPlaying;
+        }
+
+        private void Previous_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            mePlayer.Pause();
+        }
+
         private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
         {
             userIsDraggingSlider = true;
