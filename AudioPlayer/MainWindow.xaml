@@ -35,7 +35,16 @@
             </Button>
         </ToolBar>
 
+        
         <MediaElement Name="mePlayer" Grid.Row="1" LoadedBehavior="Manual" Stretch="None" />
+
+        <DataGrid x:Name="Playlist"
+              Width="Auto"
+              Grid.Row="3"
+              CanUserAddRows="False"
+              CanUserDeleteRows="False"
+              IsReadOnly="true"
+              MouseDoubleClick="Row_MouseDoubleClick"/>
 
         <StatusBar Grid.Row="2">
             <StatusBar.ItemsPanel>

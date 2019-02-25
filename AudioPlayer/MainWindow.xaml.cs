@@ -36,6 +36,15 @@ namespace AudioPlayer
             timer.Start();
         }
 
+        private void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Ensure row was clicked and not empty space
+            DataGridRow row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
+            if (row == null) return;
+
+               
+        }
+
         private void timer_Tick(object sender, EventArgs e)
         {
             if ((mePlayer.Source != null) && (mePlayer.NaturalDuration.HasTimeSpan) && (!userIsDraggingSlider))
