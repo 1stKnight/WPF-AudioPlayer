@@ -19,6 +19,7 @@ namespace AudioPlayer
         private bool userIsDraggingSlider = false;
 
         List<Song> Playlist = new List<Song>();
+        Song CurrentPlaying;
         string filePath;
 
         public MainWindow()
@@ -37,7 +38,10 @@ namespace AudioPlayer
             // Ensure row was clicked and not empty space
             DataGridRow row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
             if (row == null) return;
-               
+            Song song = Playlist[row.GetIndex()];
+            CurrentPlaying = song;
+            mePlayer.Source = new Uri(song.Name);
+            mePlayer.Play();
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -63,17 +67,21 @@ namespace AudioPlayer
             {
                 mePlayer.Source = new Uri(openFileDialog.FileName);
                 filePath = openFileDialog.FileName;
+                CurrentPlaying = new Song(openFileDialog.FileName, "");
                 mePlayer.Play();
                 mePlayer.Stop();
             }
-
         }
 
         void mePlayer_MediaOpened(object sender, RoutedEventArgs e)
         {
-            Playlist.Add(new Song(filePath, mePlayer.NaturalDuration.TimeSpan.ToString(@"hh\:mm\:ss")));
-            PlaylistGrid.ItemsSource = null;
-            PlaylistGrid.ItemsSource = Playlist;
+            if (!Playlist.Exists(elem => elem.Name == CurrentPlaying.Name))
+            {
+                Playlist.Add(new Song(filePath, mePlayer.NaturalDuration.TimeSpan.ToString(@"hh\:mm\:ss")));
+                PlaylistGrid.ItemsSource = null;
+                PlaylistGrid.ItemsSource = Playlist;
+            }
+           
         }
 
         private void Play_CanExecute(object sender, CanExecuteRoutedEventArgs e)
