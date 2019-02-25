@@ -1,19 +1,11 @@
-﻿using Microsoft.Win32;
+﻿using AudioPlayer.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace AudioPlayer
@@ -26,9 +18,13 @@ namespace AudioPlayer
         private bool mediaPlayerIsPlaying = false;
         private bool userIsDraggingSlider = false;
 
+        List<Song> Playlist = new List<Song>();
+        string filePath;
+
         public MainWindow()
         {
             InitializeComponent();
+            mePlayer.MediaOpened += mePlayer_MediaOpened;
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
@@ -41,7 +37,6 @@ namespace AudioPlayer
             // Ensure row was clicked and not empty space
             DataGridRow row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
             if (row == null) return;
-
                
         }
 
@@ -63,9 +58,22 @@ namespace AudioPlayer
         private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
+            openFileDialog.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg";
             if (openFileDialog.ShowDialog() == true)
+            {
                 mePlayer.Source = new Uri(openFileDialog.FileName);
+                filePath = openFileDialog.FileName;
+                mePlayer.Play();
+                mePlayer.Stop();
+            }
+
+        }
+
+        void mePlayer_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            Playlist.Add(new Song(filePath, mePlayer.NaturalDuration.TimeSpan.ToString(@"hh\:mm\:ss")));
+            PlaylistGrid.ItemsSource = null;
+            PlaylistGrid.ItemsSource = Playlist;
         }
 
         private void Play_CanExecute(object sender, CanExecuteRoutedEventArgs e)

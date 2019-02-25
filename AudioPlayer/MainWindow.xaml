@@ -18,6 +18,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+
         </Grid.RowDefinitions>
         <ToolBar>
             <Button Command="ApplicationCommands.Open">
@@ -38,7 +40,7 @@
         
         <MediaElement Name="mePlayer" Grid.Row="1" LoadedBehavior="Manual" Stretch="None" />
 
-        <DataGrid x:Name="Playlist"
+        <DataGrid x:Name="PlaylistGrid"
               Width="Auto"
               Grid.Row="3"
               CanUserAddRows="False"

@@ -10,5 +10,11 @@ namespace AudioPlayer.Models
     {
        public string Name { get; set; }
        public string Duration { get; set; }
+
+        public Song(string Name, string Duration)
+        {
+            this.Name = Name;
+            this.Duration = Duration;
+        }
     }
 }
