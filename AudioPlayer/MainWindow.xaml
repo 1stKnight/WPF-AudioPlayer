@@ -21,7 +21,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ToolBar>
             <Button Command="ApplicationCommands.Open">
@@ -46,18 +47,20 @@
             </Button>
         </ToolBar>
 
+        <Ellipse x:Name="ellVisualizer" Grid.Row="1" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="50" 
+                      Stroke="Black" VerticalAlignment="Center" Width="256"/>
         
-        <MediaElement Name="mePlayer" Grid.Row="1" LoadedBehavior="Manual" Stretch="None" />
+        <MediaElement Name="mePlayer" Grid.Row="2" LoadedBehavior="Manual" Stretch="None" />
 
         <DataGrid x:Name="PlaylistGrid"
               Width="Auto"
-              Grid.Row="3"
+              Grid.Row="4"
               CanUserAddRows="False"
               CanUserDeleteRows="False"
               IsReadOnly="true"
               MouseDoubleClick="Row_MouseDoubleClick"/>
 
-        <StatusBar Grid.Row="2">
+        <StatusBar Grid.Row="3">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
